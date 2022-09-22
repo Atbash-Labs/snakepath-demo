@@ -15,9 +15,36 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+  -moz-animation: fadeIn 2s;
+  -o-animation: fadeIn 2s;
+  -ms-animation: fadeIn 2s;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+.card {
+  padding: 1em;
+}
+
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #cd9400;
   text-decoration: inherit;
 }
 a:hover {
@@ -28,9 +55,6 @@ a:hover {
   display: flex;
   place-items: center;
   justify-content: center;
-}
-
-header {
 }
 
 body {
@@ -101,34 +125,6 @@ h6 {
   font-weight: 600;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  animation: fadeIn 2s;
-  -webkit-animation: fadeIn 2s;
-  -moz-animation: fadeIn 2s;
-  -o-animation: fadeIn 2s;
-  -ms-animation: fadeIn 2s;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-}
-
-.card {
-  padding: 1em;
-}
-
 form {
   display: inline-block;
   align-items: center;
@@ -137,7 +133,7 @@ form {
 }
 
 #preview {
-  max-width: 800px;
+  max-width: 600px;
   text-align: left;
 }
 
@@ -167,8 +163,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #101828;
-  background-color: #cd9400;
+  color: #000;
+  background-color: #ffd056;
   border-color: #cd9400;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -196,8 +192,9 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: rgba(255, 208, 86, 0.6);
-  }
+    color: #ffd056;
+  } 
+  
   body {
     color: #667085;
   }
