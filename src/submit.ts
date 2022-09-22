@@ -71,13 +71,13 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(`Payload Hash: ${payloadHash}`)
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h2>Raw Payload</h2>
+        <h4>Raw Payload</h4>
         <p>${thePayload}</p>
 
-        <h2>Encrypted Payload</h2>
+        <h4>Encrypted Payload</h4>
         <p>${ciphertext.toString('base64')}</p>
 
-        <h2>Payload Hash</h2>
+        <h4>Payload Hash</h4>
         <p>${payloadHash}<p>
         `
         
@@ -94,16 +94,16 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(`Verify this matches the user address: ${computeAddress(userPublicKey)}`)
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h2>Raw Payload</h2>
+        <h4>Raw Payload</h4>
         <p>${thePayload}</p>
 
-        <h2>Encrypted Payload</h2>
+        <h4>Encrypted Payload</h4>
         <p>${ciphertext.toString('base64')}</p>
 
-        <h2>Payload Hash</h2>
+        <h4>Payload Hash</h4>
         <p>${payloadHash}<p>
 
-        <h2>Payload Signature</h2>
+        <h4>Payload Signature</h4>
         <p>${payloadSignature}<p>
         `
 
@@ -162,19 +162,19 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(txHash)
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h2>Raw Payload</h2>
+        <h4>Raw Payload</h4>
         <p>${thePayload}</p>
 
-        <h2>Encrypted Payload</h2>
+        <h4>Encrypted Payload</h4>
         <p>${ciphertext.toString('base64')}</p>
 
-        <h2>Payload Hash</h2>
+        <h4>Payload Hash</h4>
         <p>${payloadHash}<p>
 
-        <h2>Payload Signature</h2>
+        <h4>Payload Signature</h4>
         <p>${payloadSignature}<p>
 
-        <h2>Other Info</h2>
+        <h4>Other Info</h4>
         <p>
 
         <b>Encryption method:</b> ChaCha20Poly1305 <br>
@@ -183,7 +183,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
 
         </p>
 
-        <h2>Transaction Parameters</h2>
+        <h4>Transaction Parameters</h4>
         <p><b>Tx Hash: </b><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank">${txHash}</a></p>
         <p style="font-size: 0.8em;">${JSON.stringify(tx_params)}</p>
         `

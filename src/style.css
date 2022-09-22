@@ -30,26 +30,7 @@ a:hover {
   justify-content: center;
 }
 
-header .card {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.4em 1.2em;
-  width: 20ch;
-  margin: 1em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-header .card:hover {
-  border-color: #646cff;
-}
-header .card:focus,
-header .card:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+header {
 }
 
 body {
@@ -60,9 +41,64 @@ body {
   min-height: 100vh;
 }
 
+body .card:hover {
+  border-color: #646cff;
+}
+body .card:focus,
+body .card:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 4.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 3.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h4 {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 2.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h5 {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 1.875rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+h6 {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-weight: 600;
 }
 
 #app {
@@ -116,8 +152,8 @@ form {
   width: 100%;
 }
 
-.read-the-docs {
-  color: #888;
+.accent-color {
+  color: #f8b916;
 }
 
 input {
@@ -131,7 +167,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  color: #101828;
+  background-color: #cd9400;
+  border-color: #cd9400;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -144,7 +182,8 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
+  background-color: rgba(255, 208, 86, 0.6);
+  opacity: 1;
 }
 button:focus,
 button:focus-visible {
@@ -157,10 +196,21 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: rgba(255, 208, 86, 0.6);
+  }
+  body {
+    color: #667085;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #101828;
   }
   button {
-    background-color: #f9f9f9;
+  background-color: #ffd056;
+  border-color: #cd9400;
+  }
+  button:hover {
+    background-color: rgba(255, 208, 86, 0.6);
+    opacity: 1;
   }
 }
 

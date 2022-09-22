@@ -5,7 +5,7 @@ import { setupSubmit } from './submit'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <header>
   <h1>Snakepath</h1>
-  <h2>Sample Application:<br>Privacy-Preserving On-chain Credit Scoring</h2>
+  <h6>Sample Application:<br>Privacy-Preserving On-chain Credit Scoring</h6>
 </header>
   <div>
     <div id="form">
