@@ -5,23 +5,24 @@ import { Buffer } from "buffer/";
 import secureRandom from "secure-random";
 
 export async function setupSubmit(element: HTMLButtonElement) {
-    // @ts-ignore
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const [myAddress] = await provider.send("eth_requestAccounts", []);
-
-    // generating ephemeral keys
-    const wallet = ethers.Wallet.createRandom();
-    const userPrivateKeyBytes = arrayify(wallet.privateKey);
-    const userPublicKey: string = new SigningKey(wallet.privateKey).compressedPublicKey;
-    const userPublicKeyBytes = arrayify(userPublicKey)
-    //
-
-    const gatewayPublicKey = "Ax7TzSrouCQq8bhXNuTcSsJsyRtXzM5sBBMe41unN8NW"; // TODO get this key
-    const gatewayPublicKeyBuffer = Buffer.from(gatewayPublicKey, "base64");
-    const gatewayPublicKeyBytes = arrayify(gatewayPublicKeyBuffer);
 
     element.addEventListener("click", async function(event: Event){
         event.preventDefault()
+
+        // generating ephemeral keys
+        const wallet = ethers.Wallet.createRandom();
+        const userPrivateKeyBytes = arrayify(wallet.privateKey);
+        const userPublicKey: string = new SigningKey(wallet.privateKey).compressedPublicKey;
+        const userPublicKeyBytes = arrayify(userPublicKey)
+        //
+
+        const gatewayPublicKey = "Ax7TzSrouCQq8bhXNuTcSsJsyRtXzM5sBBMe41unN8NW"; // get manually for now
+        const gatewayPublicKeyBuffer = Buffer.from(gatewayPublicKey, "base64");
+        const gatewayPublicKeyBytes = arrayify(gatewayPublicKeyBuffer);
+
+        // @ts-ignore
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const [myAddress] = await provider.send("eth_requestAccounts", []);
 
         const offchain_assets = document.querySelector<HTMLFormElement>('#input1')?.value;
         const onchain_assets = document.querySelector<HTMLFormElement>('#input2')?.value;

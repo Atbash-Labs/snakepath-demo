@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 
 export function setupConnect(element: HTMLButtonElement) {
-  element.innerHTML = `Connect`
+  element.innerHTML = `Connect Wallet (MetaMask)`
   let myAddress : string
   const connect = async () => {
     // @ts-ignore

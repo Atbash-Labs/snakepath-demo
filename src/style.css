@@ -31,7 +31,7 @@ a:hover {
 }
 
 header h1 {
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
 
 header .card {
@@ -108,17 +108,16 @@ form {
   max-width: 800px;
   text-align: left;
 }
-#wallet {
+
+/* #wallet {
   position: absolute;
   top: 6%;
   right: 5%;
-}
+} */
+
 #account {
-  display: inline-block;
-  position: absolute;
   text-shadow: 2px 2px 5px #242424;
-  top: 0;
-  right: 5%;
+  width: 100%;
 }
 
 .read-the-docs {
@@ -139,6 +138,9 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+}
+#connect {
+  width:100%;
 }
 #submit {
   margin-top: 0.6em;

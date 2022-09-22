@@ -4,29 +4,16 @@ import { setupSubmit } from './submit'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <header>
-  <h1>Fortress Labs</h1>
-  <div id="links">
-    <a href="">
-    <div class="card">
-      Whitepaper
-    </div>
-    </a>
-    <a href="">
-    <div class="card">
-      GitHub
-    </div>
-    </a>
-    <a href="">
-    <div class="card">
-      Docs
-    </div>
-    </a>
-  </div>
+  <h1>Snakepath</h1>
+  <h2>Sample Application: Privacy-Preserving On-chain Credit Scoring</h2>
 </header>
   <div>
-    <h2>Sample Application: Privacy-Preserving On-chain Credit Scoring</h2>
     <div id="form">
+      <div id="wallet">
+      </div>
       <form name="inputForm">
+      <button id="connect" type="button"></button>
+      <div id="account"></div>
       <label for="input1">$USD value of offchain assets:  </label>
       <input type="number" placeholder="$" id="input1" name="input1" />
       <br>
