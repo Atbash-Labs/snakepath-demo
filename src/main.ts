@@ -5,15 +5,16 @@ import { setupSubmit } from './submit'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <header>
   <h1>Snakepath</h1>
-  <h2>Sample Application: Privacy-Preserving On-chain Credit Scoring</h2>
+  <h2>Sample Application:<br>Privacy-Preserving On-chain Credit Scoring</h2>
 </header>
   <div>
     <div id="form">
       <div id="wallet">
       </div>
-      <form name="inputForm">
-      <button id="connect" type="button"></button>
-      <div id="account"></div>
+      <form name="inputForm">    
+        <div class="card">
+        <button id="connect" type="button"></button>
+        </div>
       <label for="input1">$USD value of offchain assets:  </label>
       <input type="number" placeholder="$" id="input1" name="input1" />
       <br>
@@ -28,14 +29,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <br>
       <label for="input5">$USD value of salary/income stream:  </label>
       <input type="text" placeholder="$" id="input5" name="input5" />
-        <br>
+      <div class="card">
       <button id="submit">Submit</button>
-
+      </div>
     </div>
     <div id="preview" style="word-wrap: break-word;">
     </div>
-    <div class="card">
-    </div>
+
   </div>
 `
 setupSubmit(document.querySelector<HTMLButtonElement>('#submit')!)
