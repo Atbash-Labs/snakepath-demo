@@ -1,9 +1,8 @@
 import { encrypt_payload } from "./wasm";
 import { ethers } from "ethers";
-import { arrayify, hexlify, SigningKey, keccak256, recoverPublicKey, computeAddress } from "ethers/lib/utils";
+import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, sha256 } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
 import { Buffer } from "buffer/";
-import secureRandom from "secure-random";
 
 export async function setupSubmit(element: HTMLButtonElement) {
 
@@ -17,7 +16,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const userPublicKeyBytes = arrayify(userPublicKey)
         //
 
-        const gatewayPublicKey = "Ax7TzSrouCQq8bhXNuTcSsJsyRtXzM5sBBMe41unN8NW"; // get manually for now
+        const gatewayPublicKey = "AzzP18n/qp2odxjLHvvcCvSkf2BJWoBysim+Y00/Wi/3"; // get manually for now
         const gatewayPublicKeyBuffer = Buffer.from(gatewayPublicKey, "base64");
         const gatewayPublicKeyBytes = arrayify(gatewayPublicKeyBuffer);
 
@@ -31,52 +30,51 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const missed_payments = document.querySelector<HTMLFormElement>('#input4')?.value;
         const income = document.querySelector<HTMLFormElement>('#input5')?.value;
 
-        const data = JSON.stringify({
-        address: myAddress,
-        offchain_assets: Number(offchain_assets),
-        onchain_assets: Number(onchain_assets),
-        liabilities: Number(liabilities),
-        missed_payments: Number(missed_payments),
-        income: Number(income)
-        })
+        const inputs = JSON.stringify(
+            {
+                address: myAddress,
+                offchain_assets: Number(offchain_assets),
+                onchain_assets: Number(onchain_assets),
+                liabilities: Number(liabilities),
+                missed_payments: Number(missed_payments),
+                income: Number(income),
+            }
+        )
 
         const routing_info = "secret108tgg5wpnu43fyklelug8hehshydmx8dsxlu99"
         const routing_code_hash = "a8505057b5e2b3cd9dfc275bddd085a894f0c055f2f2c2af64cccdd7a671c7c3"
-        const user_address = myAddress
+        const user_address: string = myAddress
         const user_key = Buffer.from(userPublicKeyBytes)
 
-        
-        const thePayload = JSON.stringify({
-            data: data,
+        const payload = {
+            data: inputs,
             routing_info: routing_info,
             routing_code_hash: routing_code_hash,
             user_address: user_address,
             user_key: user_key.toString('base64'),
-        })
+        }
         
-        const plaintext = Buffer.from(JSON.stringify(thePayload));
-        const nonce = secureRandom(12, { type: "Uint8Array" });
+        const plaintext = Buffer.from(JSON.stringify(payload));
+        const nonce = arrayify(randomBytes(12));
         const handle = "request_score"
 
-        const ciphertext = Buffer.from(
-        encrypt_payload(
-            gatewayPublicKeyBytes,
-            userPrivateKeyBytes,
-            plaintext,
-            nonce
+        let ciphertext = Buffer.from(
+            encrypt_payload(
+                gatewayPublicKeyBytes,
+                userPrivateKeyBytes,
+                plaintext,
+                nonce
         ));
     
-        // const ciphertextHash = keccak256(ciphertext)
-        // const payloadHash = '0x' + sha3.keccak256("\x19Ethereum Signed Message:\n" + 32 + ciphertextHash.substring(2))
-        const payloadHash = keccak256(ciphertext)
+        const payloadHash = sha256(ciphertext);
         console.log(`Payload Hash: ${payloadHash}`)
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h4>Raw Payload</h4>
-        <p>${thePayload}</p>
+        <p>${plaintext}</p>
 
         <h4>Encrypted Payload</h4>
-        <p>${ciphertext.toString('base64')}</p>
+        <p>${ciphertext}</p>
 
         <h4>Payload Hash</h4>
         <p>${payloadHash}<p>
@@ -90,21 +88,38 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(`Payload Signature: ${payloadSignature}`)
 
         // recover the public key from the signature and message
+        const recoveredKey = recoverPublicKey(payloadHash, payloadSignature)
+        console.log(`Recovered public key: ${recoveredKey}`)
+        const uncompressed_user_pubkey = publicKeyConvert(arrayify(recoveredKey),false)
+        const compressed_user_pubkey = publicKeyConvert(arrayify(recoveredKey),true)
+        console.log(`uncompressed_user_pubkey: ${hexlify(uncompressed_user_pubkey)}`)
+        console.log(`compressed_user_pubkey: ${hexlify(compressed_user_pubkey)}`)
         
-        // const user_pubkey = recoverPublicKey(payloadHash, payloadSignature)
-        const user_pubkey = arrayify(recoverPublicKey(payloadHash, payloadSignature))
+        console.log(`Verify this matches the user address: ${computeAddress(uncompressed_user_pubkey)}`)
+        
+        const user_pubkey = publicKeyConvert(arrayify(recoverPublicKey(arrayify(payloadHash), payloadSignature)),true)
+        console.log(`user_pubkey: ${hexlify(user_pubkey)}`)
 
-        console.log(`Recovered public key: ${hexlify(user_pubkey)}`)
-        console.log(`Verify this matches the user address: ${computeAddress(user_pubkey)}`)
-
-        const uncompressed_user_pubkey = hexlify(publicKeyConvert(user_pubkey,false))
-        const compressed_user_pubkey = hexlify(publicKeyConvert(user_pubkey,true))
-        console.log(`uncompressed_user_pubkey: ${uncompressed_user_pubkey}`)
-        console.log(`compressed_user_pubkey: ${compressed_user_pubkey}`)
+        const handle_msg = {input: { inputs: {
+            task_id: 1,
+            handle: handle,
+            routing_info: routing_info,
+            routing_code_hash: routing_code_hash,
+            user_address: user_address,
+            user_key: user_key.toString('base64'),
+            user_pubkey: Buffer.from(user_pubkey).toString('base64'),
+            payload: ciphertext.toString('base64'),
+            nonce: Buffer.from(nonce).toString('base64'),
+            payload_hash: Buffer.from(payloadHash.substring(2), 'hex').toString('base64'),
+            payload_signature: Buffer.from(payloadSignature.substring(2,130), 'hex').toString('base64'),
+            source_network: "ethereum",
+        }}}
+        console.log(JSON.stringify(handle_msg))
+        console.log(payloadSignature.substring(2,130))
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h4>Raw Payload</h4>
-        <p>${thePayload}</p>
+        <p>${plaintext}</p>
 
         <h4>Encrypted Payload</h4>
         <p>${ciphertext.toString('base64')}</p>
@@ -123,7 +138,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const _payloadHash = payloadHash
         const _info = {
             user_key: hexlify(user_key),
-            user_pubkey: compressed_user_pubkey,
+            user_pubkey: hexlify(user_pubkey),
             routing_code_hash: routing_code_hash,
             handle: handle,
             nonce: hexlify(nonce),
@@ -169,9 +184,10 @@ export async function setupSubmit(element: HTMLButtonElement) {
 
         const txHash = await provider.send("eth_sendTransaction", tx_params);
 
+   
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h4>Raw Payload</h4>
-        <p>${thePayload}</p>
+        <p>${plaintext}</p>
 
         <h4>Encrypted Payload</h4>
         <p>${ciphertext.toString('base64')}</p>
