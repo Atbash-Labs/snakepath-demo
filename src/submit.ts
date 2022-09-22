@@ -1,7 +1,8 @@
 import { encrypt_payload } from "./wasm";
 import { ethers } from "ethers";
-import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, sha256 } from "ethers/lib/utils";
+import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, keccak256 } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
+// import sha3 from "js-sha3";
 import { Buffer } from "buffer/";
 
 export async function setupSubmit(element: HTMLButtonElement) {
@@ -66,8 +67,16 @@ export async function setupSubmit(element: HTMLButtonElement) {
                 nonce
         ));
     
-        const payloadHash = sha256(ciphertext);
-        console.log(`Payload Hash: ${payloadHash}`)
+        // const ciphertextHash = keccak256(ciphertext);
+        // console.log(`payloadHash: ${ciphertextHash}`)
+        // const middleHash = '0x' + sha3.keccak256("\x19Ethereum Signed Message:\n32" + ciphertextHash.substring(2))
+        // console.log(`payloadHash: ${middleHash}`)
+        // const payloadHash = sha256(middleHash)
+        // console.log(`payloadHash: ${payloadHash}`)
+
+        const payloadHash = keccak256(ciphertext)
+        console.log(`payloadHash: ${payloadHash}`)
+        
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h4>Raw Payload</h4>
