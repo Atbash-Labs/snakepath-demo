@@ -1,7 +1,6 @@
 import { encrypt_payload } from "./wasm";
 import { ethers } from "ethers";
 import { arrayify, hexlify, SigningKey, keccak256, recoverPublicKey, recoverAddress, computeAddress } from "ethers/lib/utils";
-import sha3 from "js-sha3";
 import { Buffer } from "buffer/";
 import secureRandom from "secure-random";
 
