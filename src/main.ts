@@ -11,11 +11,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     call arbitrary functions on private compute chains while preserving the privacy 
     of the inputs and validity of the outputs.
   </p>
-  <p><b>
-    Note: In order to use this app, you must have an account on the Goerli testnet 
-    with enough testnet ethereum to make the initial transaction, faucet link here: 
-    <a href="https://faucet.paradigm.xyz/" target="_blank">https://faucet.paradigm.xyz/</a>
-  </b></p>
   <p>
     In this sample app, a contract on Ethereum Goerli Testnet manages a private 
     credit scoring contract on a privacy-preserving network (Secret Network Testnet). 
@@ -27,6 +22,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     Note: The inputs chosen and scoring weights are for demonstration purposes only. 
     This is merely meant to be a Proof of Concept.
   </b></p>
+  <p>
+    In order to use this app, you must have an account on the Goerli testnet 
+    with enough testnet ethereum to make the initial transaction, faucet link here: 
+    <a href="https://faucet.paradigm.xyz/" target="_blank">https://faucet.paradigm.xyz/</a>
+  </p>
   <p>
     Step 1: Connect your Ethereum wallet and navigate to the Goerli testnet. (MetaMask only)
     <div class="card">
