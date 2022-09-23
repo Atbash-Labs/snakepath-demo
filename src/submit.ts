@@ -83,7 +83,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         <p>${plaintext}</p>
 
         <h4>Encrypted Payload</h4>
-        <p>${ciphertext}</p>
+        <p>${ciphertext.toString('base64')}</p>
 
         <h4>Payload Hash</h4>
         <p>${payloadHash}<p>

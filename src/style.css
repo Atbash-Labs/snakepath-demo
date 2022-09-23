@@ -28,18 +28,40 @@
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  /* height: 6em; */
+  padding-bottom: 1rem;
+  /* filter: invert(); */
   will-change: filter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.logo img {
+  filter: invert();
+}
+/* .logo:hover {
+  filter: drop-shadow(0 0 2em #cd9400);
 }
 .logo.vanilla:hover {
   filter: drop-shadow(0 0 2em #3178c6aa);
-}
+} */
+
 .card {
   padding: 1em;
+}
+
+header {
+  max-width: 650px;
+}
+header h1 {
+  margin-bottom: -0.5rem;
+}
+header h6 {
+  text-align: left;
+}
+header p {
+  text-align: justify;
+  font-size: 1rem;
 }
 
 a {
@@ -133,7 +155,7 @@ form {
 }
 
 #preview {
-  max-width: 600px;
+  max-width: 650px;
   text-align: left;
 }
 
@@ -169,6 +191,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 #connect {
   width:100%;
 }
@@ -194,6 +217,9 @@ button:focus-visible {
   a:hover {
     color: #ffd056;
   } 
+  .logo img {
+    filter: none;
+  }
   
   body {
     color: #667085;
