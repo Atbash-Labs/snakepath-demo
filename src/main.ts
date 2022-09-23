@@ -67,11 +67,3 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 setupSubmit(document.querySelector<HTMLButtonElement>('#submit')!)
 setupConnect(document.querySelector<HTMLButtonElement>('#connect')!)
-
-// saved just in case
-// <h1>Snakepath</h1>
-// <div class="logo">
-// <div id="by"><h4>by &nbsp</h4></div>
-// <img src="fortress.svg" alt="Fortress Labs" style="height:3.75em;">
-// </h4>
-// </div>

@@ -8,9 +8,6 @@ export function setupConnect(element: HTMLButtonElement) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     [myAddress] = await provider.send("eth_requestAccounts", [])
     element.innerHTML = `Connected account: ${myAddress.substring(0,6)}...${myAddress.substring(38)}`
-    // document.querySelector<HTMLDivElement>('#account')!.innerHTML = `
-    //   <p>Connected account: ${myAddress}</p>
-    // `
   }
   element.addEventListener('click', () => connect())
 }

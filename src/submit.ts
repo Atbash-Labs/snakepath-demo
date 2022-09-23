@@ -2,17 +2,9 @@ import { encrypt_payload } from "./wasm";
 import { BigNumber, ethers } from "ethers";
 import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, keccak256, toUtf8String } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
-// import sha3 from "js-sha3";
 import { Buffer } from "buffer/";
-// import 'dotenv/config'
 
 export async function setupSubmit(element: HTMLButtonElement) {
-
-    // const network = "goerli";
-
-    // const queryProvider = await ethers.getDefaultProvider(network, {
-    //     alchemy: process.env.YOUR_ALCHEMY_API_KEY,
-    // });
 
     element.addEventListener("click", async function(event: Event){
         event.preventDefault()
@@ -22,7 +14,6 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const userPrivateKeyBytes = arrayify(wallet.privateKey);
         const userPublicKey: string = new SigningKey(wallet.privateKey).compressedPublicKey;
         const userPublicKeyBytes = arrayify(userPublicKey)
-        //
 
         const gatewayPublicKey = "Am6SfHXjCbOtN66Sv9yvhWf6SKPoKFmL/VlQIf1I7CfA"; // get manually for now
         const gatewayPublicKeyBuffer = Buffer.from(gatewayPublicKey, "base64");
@@ -73,17 +64,9 @@ export async function setupSubmit(element: HTMLButtonElement) {
                 plaintext,
                 nonce
         ));
-    
-        // const ciphertextHash = keccak256(ciphertext);
-        // console.log(`payloadHash: ${ciphertextHash}`)
-        // const middleHash = '0x' + sha3.keccak256("\x19Ethereum Signed Message:\n32" + ciphertextHash.substring(2))
-        // console.log(`payloadHash: ${middleHash}`)
-        // const payloadHash = sha256(middleHash)
-        // console.log(`payloadHash: ${payloadHash}`)
 
         const payloadHash = keccak256(ciphertext)
         console.log(`payloadHash: ${payloadHash}`)
-        
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h6>Raw Payload</h6>
@@ -93,7 +76,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         
         // get Metamask to sign the payloadHash
         const from = myAddress;
-        const params = [from, payloadHash];  // eth_sign msgParams is just the message
+        const params = [from, payloadHash];
         const method = 'eth_sign';
         const payloadSignature = await provider.send(method, params)
         console.log(`Payload Signature: ${payloadSignature}`)
@@ -166,8 +149,6 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const clientAddress = '0x8b35154De7d57dF3f6AD133ed01d929240B9F504'
         const clientAbi = [{"inputs":[{"internalType":"address","name":"_gatewayAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"taskId","type":"uint256"},{"indexed":false,"internalType":"bytes","name":"result","type":"bytes"}],"name":"ComputedResult","type":"event"},{"inputs":[],"name":"GatewayAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_taskId","type":"uint256"},{"internalType":"bytes","name":"_result","type":"bytes"}],"name":"callback","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"string","name":"_sourceNetwork","type":"string"},{"internalType":"string","name":"_routingInfo","type":"string"},{"internalType":"bytes32","name":"_payloadHash","type":"bytes32"},{"components":[{"internalType":"bytes","name":"user_key","type":"bytes"},{"internalType":"bytes","name":"user_pubkey","type":"bytes"},{"internalType":"string","name":"routing_code_hash","type":"string"},{"internalType":"string","name":"handle","type":"string"},{"internalType":"bytes12","name":"nonce","type":"bytes12"},{"internalType":"bytes","name":"payload","type":"bytes"},{"internalType":"bytes","name":"payload_signature","type":"bytes"}],"internalType":"struct Util.ExecutionInfo","name":"_info","type":"tuple"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"}]
         const iface= new ethers.utils.Interface( clientAbi )
-        // const FormatTypes = ethers.utils.FormatTypes;
-        // console.log(iface.format(FormatTypes.full))
         const functionData = iface.encodeFunctionData("send",
             [
                 _userAddress,
@@ -186,7 +167,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
                 to: clientAddress,
                 from: myAddress,
                 value: '0x00', // 0
-                data: functionData, // TODO figure out what this data is meant to be
+                data: functionData,
                 chainId: "0x5"  // ignored by MetaMask
             },
           ];
@@ -210,9 +191,6 @@ export async function setupSubmit(element: HTMLButtonElement) {
             </p>
             `
         })
-
-        // const logs = await iface.getEvent("0xcae06fc49de1186a07dc3cf036228e07fb4709734c98481c0593be62b525a64e")
-        //   console.log(logs)
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h6>Raw Payload</h6>
