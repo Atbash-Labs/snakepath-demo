@@ -17,7 +17,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         const userPublicKeyBytes = arrayify(userPublicKey)
         //
 
-        const gatewayPublicKey = "AyEC95c/tLZmE3p51EoY69bz8HkkcD/zNBu58V3KxxQo"; // get manually for now
+        const gatewayPublicKey = "Am6SfHXjCbOtN66Sv9yvhWf6SKPoKFmL/VlQIf1I7CfA"; // get manually for now
         const gatewayPublicKeyBuffer = Buffer.from(gatewayPublicKey, "base64");
         const gatewayPublicKeyBytes = arrayify(gatewayPublicKeyBuffer);
 
@@ -42,7 +42,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
             }
         )
 
-        const routing_info = "secret1upc7pt4ft49nz4gd6gqhw207d5v7tys49djx3a"  // get manually for now
+        const routing_info = "secret1xreyeg70r8nxpkyanefv8wrn58vdc07lg0dn79"  // get manually for now
         const routing_code_hash = "a8505057b5e2b3cd9dfc275bddd085a894f0c055f2f2c2af64cccdd7a671c7c3"  // get manually for now
         const user_address: string = myAddress
         const user_key = Buffer.from(userPublicKeyBytes)
@@ -156,7 +156,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         )
                 
         // create the abi interface and encode the function data (update manually on each new deploy)
-        const publicClientAddress = '0x8DD96e70c0128FC2D30Cbf661FFa5d8cc445b6e5'
+        const publicClientAddress = '0x8b35154De7d57dF3f6AD133ed01d929240B9F504'
         const abi = [{"inputs":[{"internalType":"address","name":"_gatewayAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"taskId","type":"uint256"},{"indexed":false,"internalType":"bytes","name":"result","type":"bytes"}],"name":"ComputedResult","type":"event"},{"inputs":[],"name":"GatewayAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_taskId","type":"uint256"},{"internalType":"bytes","name":"_result","type":"bytes"}],"name":"callback","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"string","name":"_sourceNetwork","type":"string"},{"internalType":"string","name":"_routingInfo","type":"string"},{"internalType":"bytes32","name":"_payloadHash","type":"bytes32"},{"components":[{"internalType":"bytes","name":"user_key","type":"bytes"},{"internalType":"bytes","name":"user_pubkey","type":"bytes"},{"internalType":"string","name":"routing_code_hash","type":"string"},{"internalType":"string","name":"handle","type":"string"},{"internalType":"bytes12","name":"nonce","type":"bytes12"},{"internalType":"bytes","name":"payload","type":"bytes"},{"internalType":"bytes","name":"payload_signature","type":"bytes"}],"internalType":"struct Util.ExecutionInfo","name":"_info","type":"tuple"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"}]
         const iface= new ethers.utils.Interface( abi )
         // const FormatTypes = ethers.utils.FormatTypes;
