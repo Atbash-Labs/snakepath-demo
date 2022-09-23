@@ -14,7 +14,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <p><b>
     Note: In order to use this app, you must have an account on the Goerli testnet 
     with enough testnet ethereum to make the initial transaction, faucet link here: 
-    <a href="https://faucet.paradigm.xyz/">https://faucet.paradigm.xyz/</a>
+    <a href="https://faucet.paradigm.xyz/" target="_blank">https://faucet.paradigm.xyz/</a>
   </b></p>
   <p>
     In this sample app, a contract on Ethereum Goerli Testnet manages a private 
