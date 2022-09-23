@@ -79,14 +79,9 @@ export async function setupSubmit(element: HTMLButtonElement) {
         
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h4>Raw Payload</h4>
+        <h5>Raw Payload</h5>
         <p>${plaintext}</p>
 
-        <h4>Encrypted Payload</h4>
-        <p>${ciphertext.toString('base64')}</p>
-
-        <h4>Payload Hash</h4>
-        <p>${payloadHash}<p>
         `
         
         // get Metamask to sign the payloadHash
@@ -127,17 +122,15 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(payloadSignature.substring(2,130))
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h4>Raw Payload</h4>
+        <h5>Raw Payload</h5>
         <p>${plaintext}</p>
 
-        <h4>Encrypted Payload</h4>
-        <p>${ciphertext.toString('base64')}</p>
-
-        <h4>Payload Hash</h4>
-        <p>${payloadHash}<p>
-
-        <h4>Payload Signature</h4>
-        <p>${payloadSignature}<p>
+        <h5>Encryption Info</h5>
+        <p>
+            <b>Encryption method:</b> ChaCha20Poly1305 <br>
+            <b>Public key used during encryption:</b> ${userPublicKey} <br>
+            <b>Nonce used during encryption:</b> ${nonce} <br>
+        </p>
         `
     
         // function data to be abi encoded
@@ -195,30 +188,20 @@ export async function setupSubmit(element: HTMLButtonElement) {
 
    
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h4>Raw Payload</h4>
+        <h5>Raw Payload</h5>
         <p>${plaintext}</p>
 
-        <h4>Encrypted Payload</h4>
-        <p>${ciphertext.toString('base64')}</p>
-
-        <h4>Payload Hash</h4>
-        <p>${payloadHash}<p>
-
-        <h4>Payload Signature</h4>
-        <p>${payloadSignature}<p>
-
-        <h4>Other Info</h4>
+        <h5>Encryption Info</h5>
         <p>
-
-        <b>Encryption method:</b> ChaCha20Poly1305 <br>
-        <b>Public key used during encryption:</b> ${userPublicKey} <br>
-        <b>Nonce used during encryption:</b> ${nonce} <br>
-
+            <b>Encryption method:</b> ChaCha20Poly1305 <br>
+            <b>Public key used during encryption:</b> ${userPublicKey} <br>
+            <b>Nonce used during encryption:</b> ${nonce} <br>
         </p>
 
-        <h4>Transaction Parameters</h4>
-        <p><b>Tx Hash: </b><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank">${txHash}</a></p>
-        <p style="font-size: 0.8em;">${JSON.stringify(tx_params)}</p>
+        <h5>Transaction Info</h5>
+        <p>
+            <b>Tx Hash: </b><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank">${txHash}</a>
+        </p>
         `
     })
 }

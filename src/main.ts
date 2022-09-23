@@ -32,46 +32,44 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     This is merely meant to be a Proof of Concept.
   </b></p>
   <p>
-    Step 1: Connect your Ethereum wallet and navigate to the Goerli testnet. (Metamask only)
+    Step 1: Connect your Ethereum wallet and navigate to the Goerli testnet. (MetaMask only)
+    <div class="card">
+    <button id="connect" type="button"></button>
+    </div>
   </p>
   <p>
     Step 2: Input sample data below. (In a production flow, this encrypted data packet 
     would contain the public signature of a trusted offchain data provider. For the 
     purposes of this sample application, feel free to input arbitrary data.)
   </p>
-  <p>
-    Step 3: Sign transaction
-  </p>
-</header>
-  <div>
-    <div id="form">
-      <div id="wallet">
-      </div>
+  <div id="form">
       <form name="inputForm">    
-        <div class="card">
-        <button id="connect" type="button"></button>
-        </div>
       <label for="input1">$USD value of offchain assets:  </label>
       <input type="number" placeholder="$" id="input1" name="input1" />
       <br>
       <label for="input2">$USD value of onchain assets:  </label>
-      <input type="text" placeholder="$" id="input2" name="input2" />
+      <input type="number" placeholder="$" id="input2" name="input2" />
       <br>
       <label for="input3">$USD value of liabilities (loans, mortgages):  </label>
-      <input type="text" placeholder="$" id="input3" name="input3" />
+      <input type="number" placeholder="$" id="input3" name="input3" />
       <br>
       <label for="input4">$USD value of loan payments missed in last 5 years:  </label>
-      <input type="text" placeholder="$" id="input4" name="input4" />
+      <input type="number" placeholder="$" id="input4" name="input4" />
       <br>
       <label for="input5">$USD value of salary/income stream:  </label>
-      <input type="text" placeholder="$" id="input5" name="input5" />
-      <div class="card">
-      <button id="submit">Submit</button>
-      </div>
+      <input type="number" placeholder="$" id="input5" name="input5" />
     </div>
+  <p>
+    Step 3: Sign message and transaction. MetaMask will ask for two signatures: the first one signs 
+    the encrypted data, and the second signs and sends the transaction.
+  </p>
+  <div class="card">
+    <button id="submit">Submit</button>
+  </div>
+</header>
+  <div>
     <div id="preview" style="word-wrap: break-word;">
     </div>
-
   </div>
 `
 setupSubmit(document.querySelector<HTMLButtonElement>('#submit')!)

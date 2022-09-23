@@ -60,7 +60,7 @@ header h6 {
   text-align: left;
 }
 header p {
-  text-align: justify;
+  text-align: left;
   font-size: 1rem;
 }
 
@@ -154,29 +154,21 @@ form {
   max-width: 400px;
 }
 
+input {
+  width: 95%;
+}
+
 #preview {
   max-width: 650px;
   text-align: left;
 }
 
-/* #wallet {
-  position: absolute;
-  top: 6%;
-  right: 5%;
-} */
-
-#account {
-  text-shadow: 2px 2px 5px #242424;
-  width: 100%;
-}
 
 .accent-color {
   color: #f8b916;
 }
 
-input {
-  width: 100%;
-}
+
 
 button {
   border-radius: 8px;
