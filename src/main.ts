@@ -61,6 +61,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <div id="preview" style="word-wrap: break-word;">
     </div>
+    <div id="result" style="word-wrap: break-word;">
+    </div>
   </div>
 `
 setupSubmit(document.querySelector<HTMLButtonElement>('#submit')!)

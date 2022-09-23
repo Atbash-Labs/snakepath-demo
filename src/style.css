@@ -163,6 +163,11 @@ input {
   max-width: 650px;
   text-align: left;
 }
+#result {
+  margin-top: 2rem;
+  max-width: 650px;
+  text-align: left;
+}
 
 .accent-color {
   color: #f8b916;

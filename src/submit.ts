@@ -1,11 +1,18 @@
 import { encrypt_payload } from "./wasm";
-import { ethers } from "ethers";
-import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, keccak256 } from "ethers/lib/utils";
+import { BigNumber, ethers } from "ethers";
+import { arrayify, hexlify, SigningKey, recoverPublicKey, computeAddress, randomBytes, keccak256, toUtf8String } from "ethers/lib/utils";
 import { publicKeyConvert } from "secp256k1";
 // import sha3 from "js-sha3";
 import { Buffer } from "buffer/";
+// import 'dotenv/config'
 
 export async function setupSubmit(element: HTMLButtonElement) {
+
+    // const network = "goerli";
+
+    // const queryProvider = await ethers.getDefaultProvider(network, {
+    //     alchemy: process.env.YOUR_ALCHEMY_API_KEY,
+    // });
 
     element.addEventListener("click", async function(event: Event){
         event.preventDefault()
@@ -156,9 +163,9 @@ export async function setupSubmit(element: HTMLButtonElement) {
         )
                 
         // create the abi interface and encode the function data (update manually on each new deploy)
-        const publicClientAddress = '0x8b35154De7d57dF3f6AD133ed01d929240B9F504'
-        const abi = [{"inputs":[{"internalType":"address","name":"_gatewayAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"taskId","type":"uint256"},{"indexed":false,"internalType":"bytes","name":"result","type":"bytes"}],"name":"ComputedResult","type":"event"},{"inputs":[],"name":"GatewayAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_taskId","type":"uint256"},{"internalType":"bytes","name":"_result","type":"bytes"}],"name":"callback","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"string","name":"_sourceNetwork","type":"string"},{"internalType":"string","name":"_routingInfo","type":"string"},{"internalType":"bytes32","name":"_payloadHash","type":"bytes32"},{"components":[{"internalType":"bytes","name":"user_key","type":"bytes"},{"internalType":"bytes","name":"user_pubkey","type":"bytes"},{"internalType":"string","name":"routing_code_hash","type":"string"},{"internalType":"string","name":"handle","type":"string"},{"internalType":"bytes12","name":"nonce","type":"bytes12"},{"internalType":"bytes","name":"payload","type":"bytes"},{"internalType":"bytes","name":"payload_signature","type":"bytes"}],"internalType":"struct Util.ExecutionInfo","name":"_info","type":"tuple"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-        const iface= new ethers.utils.Interface( abi )
+        const clientAddress = '0x8b35154De7d57dF3f6AD133ed01d929240B9F504'
+        const clientAbi = [{"inputs":[{"internalType":"address","name":"_gatewayAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"taskId","type":"uint256"},{"indexed":false,"internalType":"bytes","name":"result","type":"bytes"}],"name":"ComputedResult","type":"event"},{"inputs":[],"name":"GatewayAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_taskId","type":"uint256"},{"internalType":"bytes","name":"_result","type":"bytes"}],"name":"callback","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_userAddress","type":"address"},{"internalType":"string","name":"_sourceNetwork","type":"string"},{"internalType":"string","name":"_routingInfo","type":"string"},{"internalType":"bytes32","name":"_payloadHash","type":"bytes32"},{"components":[{"internalType":"bytes","name":"user_key","type":"bytes"},{"internalType":"bytes","name":"user_pubkey","type":"bytes"},{"internalType":"string","name":"routing_code_hash","type":"string"},{"internalType":"string","name":"handle","type":"string"},{"internalType":"bytes12","name":"nonce","type":"bytes12"},{"internalType":"bytes","name":"payload","type":"bytes"},{"internalType":"bytes","name":"payload_signature","type":"bytes"}],"internalType":"struct Util.ExecutionInfo","name":"_info","type":"tuple"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+        const iface= new ethers.utils.Interface( clientAbi )
         // const FormatTypes = ethers.utils.FormatTypes;
         // console.log(iface.format(FormatTypes.full))
         const functionData = iface.encodeFunctionData("send",
@@ -176,7 +183,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
                 nonce: '0x00', // ignored by MetaMask
                 gasPrice: '0x3B9B1820', // 1000020000
                 gas: '0x0493E0', // 300000
-                to: publicClientAddress,
+                to: clientAddress,
                 from: myAddress,
                 value: '0x00', // 0
                 data: functionData, // TODO figure out what this data is meant to be
@@ -186,7 +193,27 @@ export async function setupSubmit(element: HTMLButtonElement) {
 
         const txHash = await provider.send("eth_sendTransaction", tx_params);
 
-   
+        const clientContract = new ethers.Contract(clientAddress, clientAbi, provider)
+
+        clientContract.on("ComputedResult", (raw_taskId: BigNumber, raw_result: string) => {
+
+            let taskId = toUtf8String(raw_taskId._hex)
+            console.log(taskId)
+            let result = JSON.parse(toUtf8String(raw_result))
+            console.log(raw_result)
+
+            document.querySelector<HTMLDivElement>('#result')!.innerHTML = `
+            <h6>Result</h6>
+            <p>
+                <b>Your Address:</b> ${result.name} <br>
+                <b>Your Score:</b> ${result.result}
+            </p>
+            `
+        })
+
+        // const logs = await iface.getEvent("0xcae06fc49de1186a07dc3cf036228e07fb4709734c98481c0593be62b525a64e")
+        //   console.log(logs)
+
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
         <h6>Raw Payload</h6>
         <p>${plaintext}</p>
@@ -201,6 +228,12 @@ export async function setupSubmit(element: HTMLButtonElement) {
         <h6>Transaction Info</h6>
         <p>
             <b>Tx Hash: </b><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank">${txHash}</a>
+        </p>
+        `
+        document.querySelector<HTMLDivElement>('#result')!.innerHTML = `
+        <h6>Result</h6>
+        <p>
+            <b>Please wait...</b>
         </p>
         `
     })
