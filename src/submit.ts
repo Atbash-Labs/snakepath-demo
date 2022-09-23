@@ -79,7 +79,7 @@ export async function setupSubmit(element: HTMLButtonElement) {
         
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h5>Raw Payload</h5>
+        <h6>Raw Payload</h6>
         <p>${plaintext}</p>
 
         `
@@ -122,10 +122,10 @@ export async function setupSubmit(element: HTMLButtonElement) {
         console.log(payloadSignature.substring(2,130))
 
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h5>Raw Payload</h5>
+        <h6>Raw Payload</h6>
         <p>${plaintext}</p>
 
-        <h5>Encryption Info</h5>
+        <h6>Encryption Info</h6>
         <p>
             <b>Encryption method:</b> ChaCha20Poly1305 <br>
             <b>Public key used during encryption:</b> ${userPublicKey} <br>
@@ -188,17 +188,17 @@ export async function setupSubmit(element: HTMLButtonElement) {
 
    
         document.querySelector<HTMLDivElement>('#preview')!.innerHTML = `
-        <h5>Raw Payload</h5>
+        <h6>Raw Payload</h6>
         <p>${plaintext}</p>
 
-        <h5>Encryption Info</h5>
+        <h6>Encryption Info</h6>
         <p>
             <b>Encryption method:</b> ChaCha20Poly1305 <br>
             <b>Public key used during encryption:</b> ${userPublicKey} <br>
             <b>Nonce used during encryption:</b> ${nonce} <br>
         </p>
 
-        <h5>Transaction Info</h5>
+        <h6>Transaction Info</h6>
         <p>
             <b>Tx Hash: </b><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank">${txHash}</a>
         </p>

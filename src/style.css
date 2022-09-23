@@ -5,8 +5,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #213547;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,24 +28,15 @@
 }
 
 .logo {
-  /* height: 6em; */
   padding-bottom: 1rem;
-  /* filter: invert(); */
   will-change: filter;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .logo img {
-  filter: invert();
+  filter: none;
 }
-/* .logo:hover {
-  filter: drop-shadow(0 0 2em #cd9400);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-} */
-
 .card {
   padding: 1em;
 }
@@ -55,6 +46,10 @@ header {
 }
 header h1 {
   margin-bottom: -0.5rem;
+  font-family: Poppins, sans-serif;
+  color: #101828;
+  /* color: #f8b916; */
+  font-weight: 700;
 }
 header h6 {
   text-align: left;
@@ -70,7 +65,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+    color: #ffd056;
 }
 
 #links {
@@ -85,6 +80,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  color: #667085;
 }
 
 body .card:hover {
@@ -93,6 +89,10 @@ body .card:hover {
 body .card:focus,
 body .card:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #101828;
 }
 
 h1 {
@@ -159,16 +159,14 @@ input {
 }
 
 #preview {
+  margin-top: 2rem;
   max-width: 650px;
   text-align: left;
 }
 
-
 .accent-color {
   color: #f8b916;
 }
-
-
 
 button {
   border-radius: 8px;
@@ -183,15 +181,6 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-
-#connect {
-  width:100%;
-}
-#submit {
-  margin-top: 0.6em;
-  width:100%;
-}
-
 button:hover {
   background-color: rgba(255, 208, 86, 0.6);
   opacity: 1;
@@ -201,32 +190,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #ffd056;
-  } 
-  .logo img {
-    filter: none;
-  }
-  
-  body {
-    color: #667085;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    color: #101828;
-  }
-  button {
-  background-color: #ffd056;
-  border-color: #cd9400;
-  }
-  button:hover {
-    background-color: rgba(255, 208, 86, 0.6);
-    opacity: 1;
-  }
+#connect {
+  width:100%;
+}
+#submit {
+  margin-top: 0.6em;
+  width:100%;
 }
 
 @keyframes fadeIn {
